@@ -1,6 +1,7 @@
 #include <iostream>
 #include <omp.h>
 #include <random>
+#include <list>
 
 #ifdef __APPLE_CC__
 #include <GLUT/glut.h>
@@ -31,9 +32,14 @@
 
 
 GLfloat WHITE[] = {1, 1, 1};
-GLfloat RED[] = {1, 0, 0};
-GLfloat GREEN[] = {0, 1, 0};
-GLfloat MAGENTA[] = {1, 0, 1};
+
+std::list<Circle> circles;
+
+struct ColorRGB {
+    float r;
+    float g;
+    float b;
+};
 
 float floatRandom(float min, float max)
 {
@@ -43,9 +49,6 @@ float floatRandom(float min, float max)
 
     return dis(gen);
 }
-
-Circle circle(0.15, RED, floatRandom(0.1, 0.8), floatRandom(0.1, 0.8), floatRandom(0.1, 0.8));
-Circle circle1(0.15, GREEN, floatRandom(0.1, 0.8), floatRandom(0.1, 0.8), floatRandom(0.1, 0.8));
 
 void init() {
     glEnable(GL_DEPTH_TEST);
@@ -87,8 +90,7 @@ void circlesDisplay()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
         
-    circle.update();
-    circle1.update();
+    for(Circle &c : circles) c.update();    
 
     glEnd();
     glFlush();
@@ -98,7 +100,6 @@ void circlesDisplay()
 // ! Run code: 
 // g++ main.cpp -fopenmp -lglut -lGL -lGLEW -lGLU -o main.exe
 // ./main.exe num_objects
-
 int main(int argc, char** argv)
 {   
     if(argc < 2)
@@ -116,6 +117,24 @@ int main(int argc, char** argv)
         std::cout << "\nYou must define at least one object or upper\n" << std::endl;
         return -1;
     }
+
+    for (int i = 0; i < N; i++)
+    {        
+        GLfloat color_random[3];
+        color_random[0] = floatRandom(0.2, 0.9);
+        color_random[1] = floatRandom(0.2, 0.9);
+        color_random[2] = floatRandom(0.2, 0.9);
+
+        circles.push_back(            
+            Circle(
+                0.15, 
+                color_random,
+                floatRandom(-0.8, 0.8), 
+                floatRandom(-0.8, 0.8), 
+                floatRandom(-0.8, 0.8)
+            )
+        );
+    }
     
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -131,6 +150,5 @@ int main(int argc, char** argv)
     // Movement of the objects
     // Physics or trigonometry elements in the calculations (bounce in the walls, collisions and interactions)
     // Show the FPS
-
     return 0;
 }

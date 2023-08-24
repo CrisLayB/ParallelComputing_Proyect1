@@ -20,7 +20,7 @@ public:
     Circle(double r, GLfloat* c, double x, double y, double z):
         radius(r), color(c), x(x), y(y), z(z) 
     {
-
+        
     }
 
     void update()
