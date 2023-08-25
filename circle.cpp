@@ -15,6 +15,7 @@ private:
     double x;
     double y;
     double z;
+    int direction;
 
 public:
     Circle(double r, GLfloat* c, double x, double y, double z):
