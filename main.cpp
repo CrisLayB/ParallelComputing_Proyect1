@@ -1,5 +1,7 @@
 #include <iostream>
 #include <omp.h>
+#include <chrono>
+#include <thread>
 #include <random>
 #include <list>
 
@@ -34,6 +36,10 @@
 GLfloat WHITE[] = {1, 1, 1};
 
 std::list<Circle> circles;
+
+unsigned int frameCount = 0;
+unsigned int currentTime = 0;
+unsigned int previousTime = 0;
 
 struct ColorRGB {
     float r;
