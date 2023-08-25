@@ -20,11 +20,19 @@ public:
     Circle(double r, GLfloat* c, double x, double y, double z):
         radius(r), color(c), x(x), y(y), z(z) 
     {
-        
+        direction = -1;
     }
 
     void update()
     {
+        y += direction * 0.02;
+        if (y > 1){
+            direction = -1;
+        } 
+        else if (y < -1){
+            direction = 1;
+        }
+
         glPushMatrix();
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
         glTranslated(x, y, z);
