@@ -66,23 +66,6 @@ void init() {
     glEnable(GL_LIGHT0);
 }
 
-void renderFunction()
-{
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0, 1.0, 1.0);
-    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-    glBegin(GL_POLYGON);
-    
-    glVertex2f(-0.1, -0.1);
-    glVertex2f(-0.1, 0.1);
-    glVertex2f(0.1, 0.1);
-    glVertex2f(0.1, -0.1);
-
-    glEnd();
-    glFlush();
-}
 
 void reshape(int width, int height) {
     glViewport(0, 0, width, height);
@@ -95,6 +78,28 @@ void circlesDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
+
+    // Incrementa el contador de cuadros
+    frameCount++;
+
+    // Calcula el tiempo actual
+    currentTime = glutGet(GLUT_ELAPSED_TIME);
+
+    // Calcula el tiempo transcurrido desde el ultimo calculo de FPS
+    unsigned int deltaTime = currentTime - previousTime;
+
+    // Si ha pasado al menos un segundo, calcula y muestra los FPS
+    if (deltaTime >= 1000) {
+        // Calcula los FPS
+        float fps = frameCount / (deltaTime / 1000.0f);
+
+        // Muestra los FPS en la consola
+        std::cout << "FPS: " << fps << std::endl;
+
+        // Reinicia el contador de cuadros y el tiempo
+        frameCount = 0;
+        previousTime = currentTime;
+    }
         
     for(Circle &c : circles) c.update();    
 
