@@ -108,6 +108,13 @@ void circlesDisplay()
     glutSwapBuffers();
 }
 
+void timer(int value)
+{
+		glutPostRedisplay();
+		glutTimerFunc(1000/60, timer, 0);
+}
+
+
 // ! Run code: 
 // g++ main.cpp -fopenmp -lglut -lGL -lGLEW -lGLU -o main.exe
 // ./main.exe num_objects
@@ -154,8 +161,9 @@ int main(int argc, char** argv)
     glutCreateWindow("OpenGL - Proyect 1");
     glutReshapeFunc(reshape);
     glutDisplayFunc(circlesDisplay);
-    init();
-    glutMainLoop();    
+		glutTimerFunc(20, timer, 0);
+		init();
+		glutMainLoop();    
 
     // Render the objets N times and create colors of the random way and positions in the random way
     // Movement of the objects
