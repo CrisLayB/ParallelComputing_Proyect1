@@ -138,15 +138,9 @@ int main(int argc, char** argv)
 
     for (int i = 0; i < N; i++)
     {        
-        GLfloat color_random[3];
-        color_random[0] = floatRandom(0.2, 0.9);
-        color_random[1] = floatRandom(0.2, 0.9);
-        color_random[2] = floatRandom(0.2, 0.9);
-
         circles.push_back(            
             Circle(
-                0.15, 
-                color_random,
+                0.15,
                 floatRandom(-0.8, 0.8), 
                 floatRandom(-0.8, 0.8), 
                 floatRandom(-0.8, 0.8)

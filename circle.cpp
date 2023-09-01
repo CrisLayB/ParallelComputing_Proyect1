@@ -11,7 +11,7 @@ class Circle {
 
 private:
     double radius;
-    GLfloat* color;
+    GLfloat color[3];
     double x;
     double y;
     double z;
@@ -20,12 +20,13 @@ private:
     double speed;
 
 public:
-    Circle(double r, GLfloat* c, double x, double y, double z):
-        radius(r), color(c), x(x), y(y), z(z) 
+    Circle(double r, double x, double y, double z):
+        radius(r), x(x), y(y), z(z) 
     {
         directionY = randomOne();
         directionX = randomOne();
         speed = 0.02;
+        changueColor();
     }
 
     void update()
@@ -96,9 +97,9 @@ private:
     void changueColor()
     {
         GLfloat colorRandom[] = {
-            floatRandom(0.0f, 1.0f), 
-            floatRandom(0.0f, 1.0f), 
-            floatRandom(0.0f, 1.0f)
+            floatRandom(0.1f, 1.0f), 
+            floatRandom(0.1f, 1.0f), 
+            floatRandom(0.1f, 1.0f)
         };
 
         for (int i = 0; i < 3; i++) {
