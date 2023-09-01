@@ -32,7 +32,6 @@
 
 // More references: https://cs.lmu.edu/~ray/notes/openglexamples/
 
-
 GLfloat WHITE[] = {1, 1, 1};
 
 std::list<Circle> circles;
@@ -40,21 +39,6 @@ std::list<Circle> circles;
 unsigned int frameCount = 0;
 unsigned int currentTime = 0;
 unsigned int previousTime = 0;
-
-struct ColorRGB {
-    float r;
-    float g;
-    float b;
-};
-
-float floatRandom(float min, float max)
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(min, max);
-
-    return dis(gen);
-}
 
 void init() {
     glEnable(GL_DEPTH_TEST);
@@ -65,7 +49,6 @@ void init() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 }
-
 
 void reshape(int width, int height) {
     glViewport(0, 0, width, height);
@@ -110,10 +93,9 @@ void circlesDisplay()
 
 void timer(int value)
 {
-		glutPostRedisplay();
-		glutTimerFunc(1000/60, timer, 0);
+    glutPostRedisplay();
+    glutTimerFunc(1000/60, timer, 0);
 }
-
 
 // ! Run code: 
 // g++ main.cpp -fopenmp -lglut -lGL -lGLEW -lGLU -o main.exe
@@ -138,14 +120,7 @@ int main(int argc, char** argv)
 
     for (int i = 0; i < N; i++)
     {        
-        circles.push_back(            
-            Circle(
-                0.15,
-                floatRandom(-0.8, 0.8), 
-                floatRandom(-0.8, 0.8), 
-                floatRandom(-0.8, 0.8)
-            )
-        );
+        circles.push_back(Circle(0.15));
     }
     
     glutInit(&argc, argv);
@@ -155,13 +130,8 @@ int main(int argc, char** argv)
     glutCreateWindow("OpenGL - Proyect 1");
     glutReshapeFunc(reshape);
     glutDisplayFunc(circlesDisplay);
-		glutTimerFunc(20, timer, 0);
-		init();
-		glutMainLoop();    
-
-    // Render the objets N times and create colors of the random way and positions in the random way
-    // Movement of the objects
-    // Physics or trigonometry elements in the calculations (bounce in the walls, collisions and interactions)
-    // Show the FPS
+    glutTimerFunc(20, timer, 0);
+    init();
+    glutMainLoop();
     return 0;
 }

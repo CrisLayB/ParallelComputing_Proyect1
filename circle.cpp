@@ -20,8 +20,11 @@ private:
     double speed;
 
 public:
-    Circle(double r, double x, double y, double z):
-        radius(r), x(x), y(y), z(z) 
+    Circle(double r):
+        radius(r), 
+        x(floatRandom(-0.8, 0.8)), 
+        y(floatRandom(-0.8, 0.8)), 
+        z(floatRandom(-0.8, 0.8)) 
     {
         directionY = randomOne();
         directionX = randomOne();
