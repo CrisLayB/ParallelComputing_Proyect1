@@ -52,14 +52,12 @@ private:
             directionX = -1;
             directionY = randomOne();
             speed = floatRandom(0.01, 0.04);
-            changueColor();
         }
         else if(x < -1)
         {
             directionX = 1;
             directionY = randomOne();
             speed = floatRandom(0.01, 0.04);
-            changueColor();
         }
 
         y += directionY * speed;
@@ -68,14 +66,12 @@ private:
             directionY = -1;
             directionX = randomOne();
             speed = floatRandom(0.01, 0.04);
-            changueColor();
         } 
         else if (y < -1)
         {
             directionY = 1;
             directionX = randomOne();
             speed = floatRandom(0.01, 0.04);
-            changueColor();
         }
     }
 

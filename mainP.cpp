@@ -1,4 +1,5 @@
 #include <iostream>
+#include <omp.h>
 #include <chrono>
 #include <thread>
 #include <random>
@@ -82,7 +83,7 @@ void circlesDisplay()
         frameCount = 0;
         previousTime = currentTime;
     }
-        
+
     for(Circle &c : circles) c.update();    
 
     glEnd();
@@ -97,20 +98,22 @@ void timer(int value)
 }
 
 // ! Run code: 
-// g++ main.cpp -lglut -lGL -lGLEW -lGLU -o main.exe
-// ./main.exe num_objects
-// ./main.exe 100
+// g++ mainP.cpp -fopenmp -lglut -lGL -lGLEW -lGLU -o mainP.exe
+// ./mainP.exe num_objects
+// ./mainP.exe 100 5
 int main(int argc, char** argv)
 {   
-    if(argc < 2)
+    if(argc < 3)
     {
         std::cout << "\nYou need to define the amount of objects to render" << std::endl;
-        std::cout << "./main.exe num_objects" << std::endl;
-        std::cout << "./main.exe 15\n" << std::endl;
+        std::cout << "./main.exe num_objects threads" << std::endl;
+        std::cout << "\nExample: " << std::endl;
+        std::cout << "./main.exe 15 5\n" << std::endl;
         return -1;
     }
 
-    int N = atoi(argv[1]);
+    int N = strtol(argv[1], NULL, 10);
+    int thread_count = strtol(argv[2], NULL, 10);
 
     if(N <= 0)
     {
@@ -118,6 +121,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    #pragma omp parallel for num_threads(thread_count)
     for (int i = 0; i < N; i++)
     {        
         circles.push_back(Circle(0.15));
@@ -127,7 +131,7 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(640, 480);
     glutInitWindowPosition(100, 100);
-    glutCreateWindow("OpenGL - Proyect 1 Secuencial");
+    glutCreateWindow("OpenGL - Proyect 1 Parallel");
     glutReshapeFunc(reshape);
     glutDisplayFunc(circlesDisplay);
     glutTimerFunc(20, timer, 0);
