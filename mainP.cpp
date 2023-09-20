@@ -39,6 +39,7 @@ std::list<Circle> circles;
 unsigned int frameCount = 0;
 unsigned int currentTime = 0;
 unsigned int previousTime = 0;
+unsigned int thread_count = 0;
 
 void init() {
     glEnable(GL_DEPTH_TEST);
@@ -84,6 +85,9 @@ void circlesDisplay()
         previousTime = currentTime;
     }
 
+    // Paralelizar la actualizacion de circulos
+  
+    #pragma omp parallel for num_threads(thread_count)
     for(Circle &c : circles) c.update();    
 
     glEnd();
@@ -113,7 +117,7 @@ int main(int argc, char** argv)
     }
 
     int N = strtol(argv[1], NULL, 10);
-    int thread_count = strtol(argv[2], NULL, 10);
+    thread_count = strtol(argv[2], NULL, 10);
 
     if(N <= 0)
     {
