@@ -4,7 +4,7 @@
 #include <thread>
 #include <random>
 #include <list>
-#include <vector> 
+
 #ifdef __APPLE_CC__
 #include <GLUT/glut.h>
 #else
@@ -34,7 +34,7 @@
 
 GLfloat WHITE[] = {1, 1, 1};
 
-std::vector<Circle> circles;
+std::list<Circle> circles;
 
 unsigned int frameCount = 0;
 unsigned int currentTime = 0;
@@ -87,16 +87,8 @@ void circlesDisplay()
 
     // Paralelizar la actualizacion de circulos
   
-#pragma omp parallel for num_threads(thread_count)
-for (size_t i = 0; i < circles.size(); ++i) {
-    Circle &c = circles[i];  // Access the element using index i
-
-    #pragma omp critical
-    {
-        c.update();
-    }
-}
-
+    #pragma omp parallel for num_threads(thread_count)
+    for(Circle &c : circles) c.update();    
 
     glEnd();
     glFlush();
