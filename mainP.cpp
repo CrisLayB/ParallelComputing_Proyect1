@@ -86,9 +86,12 @@ void circlesDisplay()
     }
 
     // Paralelizar la actualizacion de circulos
-  
     #pragma omp parallel for num_threads(thread_count)
-    for(Circle &c : circles) c.update();    
+    for (int i = 0; i < circles.size(); i++) {
+        auto it = std::next(circles.begin(), i);
+        Circle &c = *it;
+        c.update();
+    }
 
     glEnd();
     glFlush();
@@ -103,8 +106,8 @@ void timer(int value)
 
 // ! Run code: 
 // g++ mainP.cpp -fopenmp -lglut -lGL -lGLEW -lGLU -o mainP.exe
-// ./mainP.exe num_objects
-// ./mainP.exe 100 5
+// ./mainP.exe num_objects threads
+// ./mainP.exe 700 2
 int main(int argc, char** argv)
 {   
     if(argc < 3)
