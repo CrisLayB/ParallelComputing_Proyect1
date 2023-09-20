@@ -131,7 +131,7 @@ int main(int argc, char** argv)
     #pragma omp parallel for num_threads(thread_count)
     for (int i = 0; i < N; i++)
     {        
-        circles.push_back(Circle(0.15));
+        circles.push_back(Circle(0.15, thread_count));
     }
     
     glutInit(&argc, argv);

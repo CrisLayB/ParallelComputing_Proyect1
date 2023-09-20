@@ -20,7 +20,8 @@ private:
     double speed;
 
 public:
-    Circle(double r):
+    
+    Circle(double r, int thread_count):
         radius(r), 
         x(floatRandom(-0.8, 0.8)), 
         y(floatRandom(-0.8, 0.8)), 
@@ -29,7 +30,7 @@ public:
         directionY = randomOne();
         directionX = randomOne();
         speed = 0.02;
-        changueColor();
+        changueColor(thread_count);
     }
 
     void update()
@@ -93,7 +94,7 @@ private:
         return dis(gen);
     }
 
-    void changueColor()
+    void changueColor(int thread_count)
     {
         GLfloat colorRandom[] = {
             floatRandom(0.1f, 1.0f), 
@@ -101,6 +102,7 @@ private:
             floatRandom(0.1f, 1.0f)
         };
 
+        #pragma omp parallel for num_threads(thread_count)
         for (int i = 0; i < 3; i++) {
             color[i] = colorRandom[i];
         }
