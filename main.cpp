@@ -3,6 +3,7 @@
 #include <thread>
 #include <random>
 #include <list>
+#include <chrono>
 
 #ifdef __APPLE_CC__
 #include <GLUT/glut.h>
@@ -118,10 +119,20 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    auto start_time = std::chrono::high_resolution_clock::now();
+
     for (int i = 0; i < N; i++)
     {        
         circles.push_back(Circle(0.15));
     }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+
+    double seconds = duration.count() / 1e9;
+
+    std::cout << "Execution time: " << seconds << " seconds.\n" << std::endl;
     
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
