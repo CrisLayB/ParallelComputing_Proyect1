@@ -118,9 +118,15 @@ int main(int argc, char** argv)
         std::cout << "./main.exe 15 5\n" << std::endl;
         return -1;
     }
-
+    
     int N = strtol(argv[1], NULL, 10);
     thread_count = strtol(argv[2], NULL, 10);
+
+    if(thread_count <= 0 || thread_count > omp_get_max_threads())
+    {
+        thread_count = omp_get_max_threads();
+        std::cout << "\nThreads maximo a utilizar: " << thread_count << std::endl;
+    }
 
     if(N <= 0)
     {
