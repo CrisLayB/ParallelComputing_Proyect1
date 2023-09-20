@@ -3,7 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <random>
-#include <list>
+#include <vector>
 
 #ifdef __APPLE_CC__
 #include <GLUT/glut.h>
@@ -34,7 +34,7 @@
 
 GLfloat WHITE[] = {1, 1, 1};
 
-std::list<Circle> circles;
+std::vector<Circle> circles;
 
 unsigned int frameCount = 0;
 unsigned int currentTime = 0;
