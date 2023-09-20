@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #endif
 #include <cmath>
+#include <omp.h>
 
 // More references: https://cs.lmu.edu/~ray/notes/openglexamples/
 
@@ -20,7 +21,18 @@ private:
     double speed;
 
 public:
-    
+    Circle(double r):
+        radius(r), 
+        x(floatRandom(-0.8, 0.8)), 
+        y(floatRandom(-0.8, 0.8)), 
+        z(floatRandom(-0.8, 0.8)) 
+    {
+        directionY = randomOne();
+        directionX = randomOne();
+        speed = 0.02;
+        changueColor();
+    }
+
     Circle(double r, int thread_count):
         radius(r), 
         x(floatRandom(-0.8, 0.8)), 
@@ -92,6 +104,19 @@ private:
         std::uniform_real_distribution<float> dis(min, max);
 
         return dis(gen);
+    }
+
+    void changueColor()
+    {
+        GLfloat colorRandom[] = {
+            floatRandom(0.1f, 1.0f), 
+            floatRandom(0.1f, 1.0f), 
+            floatRandom(0.1f, 1.0f)
+        };
+
+        for (int i = 0; i < 3; i++) {
+            color[i] = colorRandom[i];
+        }
     }
 
     void changueColor(int thread_count)
